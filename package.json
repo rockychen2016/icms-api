@@ -1,0 +1,56 @@
+{
+  "name": "icms-api",
+  "private": true,
+  "version": "0.0.1",
+  "description": "对iCMS内容管理系统API的封装，使用该API能快速使用iCMS搭建您的WebApp!",
+  "type": "module",
+  "main": "./dist/icms-api.cjs.js",
+  "module": "./dist/icms-api.es.js",
+  "browser": "./dist/icms-api.umd.js",
+  "exports": {
+    ".": {
+      "import": "./dist/icms-api.es.js",
+      "require": "./dist/icms-api.cjs.js",
+      "default": "./dist/icms-api.es.js"
+    }
+  },
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist/types",
+    "test": "vitest run",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "cms",
+    "website",
+    "app",
+    "api",
+    "wechat"
+  ],
+  "author": "Rock.chen<szygnet@qq.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rockychen2016/icms-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rockychen2016/icms-api/issues"
+  },
+  "homepage": "https://github.com/rockychen2016/icms-api#readme",
+  "dependencies": {
+    "iboot-http-client": "^1.0.1"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vite": "npm:rolldown-vite@7.2.5"
+  },
+  "overrides": {
+    "vite": "npm:rolldown-vite@7.2.5"
+  }
+}
