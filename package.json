@@ -24,7 +24,8 @@
     "build:types": "tsc --emitDeclarationOnly --outDir dist/types",
     "test": "vitest run",
     "preview": "vite preview",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "nextjs:dev":"cd simple-nextjs && npm install && npm run dev"
   },
   "keywords": [
     "cms",
