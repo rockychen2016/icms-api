@@ -17,7 +17,8 @@ export class ICMSWebsite{
             "lang":lang,
             "websiteId":websiteId,
             "websiteNo":websiteNo,
-            "userType":USER_TYPE_MAP.TYPE_C
+            "userType":USER_TYPE_MAP.TYPE_C,
+            "helloURL":"guest/site/helloIBoot"
         })
         const url = baseUrl.site + "i18nList";
         const _self = this;
