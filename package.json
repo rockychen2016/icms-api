@@ -25,7 +25,8 @@
     "test": "vitest run",
     "preview": "vite preview",
     "prepublishOnly": "npm run build",
-    "nextjs:dev": "cd simple-nextjs && npm install && npm run dev"
+    "nextjs:dev": "cd simple-nextjs && npm install && npm run dev",
+    "nuxtjs:dev": "cd simple-nuxtjs && npm install && npm run dev"
   },
   "keywords": [
     "cms",
@@ -53,6 +54,6 @@
     "vite": "npm:rolldown-vite@7.2.5"
   },
   "dependencies": {
-    "iboot-http-client": "^1.1.1"
+    "iboot-http-client": "^1.1.3"
   }
 }

@@ -41,6 +41,7 @@ export type SeoProps={
     description?:string
 }
 
+
 /**
  * 站点实体(与Website是一对多关系)
  */
@@ -135,4 +136,116 @@ export interface WebSite{
      * 网址二维码(引用的是site.qrcodeUrl)
      */
     qrcodeUrl?:string,
+
+    websiteNavVOList?:Array<Pick<Webchannel>>
+}
+
+export interface Webchannel{
+    /**
+     * 栏目类型
+     */
+    channelType:ChannelType,
+    /**
+     * 栏目编号，全局唯一 
+     */
+    channelNo:string,
+    /**
+     * 栏目名称/标题
+     */
+    name:string,
+    /**
+     * 栏目URI
+     */
+    uri:string,
+    /**
+     * 栏目图片
+     */
+    image?:ImageVO,
+    /**
+     * 跳转链接
+     */
+    jumpUrl?:string,
+    /**
+     * 跳转链接的名称
+     */
+    jumpText?:string,
+
+    /**
+     * 栏目子标题
+     */
+    subTitle?:string,
+
+    /**
+     * 自定义标记
+     */
+    tagLabel?:string,
+    /**
+     * 栏目简介
+     */
+    introduction?:string,
+
+    /**
+     * 栏目下的Banner图片，可以用作轮播动画
+     */
+    banners?:Array<ImageVO>,
+
+    /**
+     * 栏目级别,由channelNo组成
+     * 格式如channelNo,channelNo,channelNo,
+     * 解释如当前栏目level值为channelNo1,channelNo2,channelNo3,
+     * 那么当前栏目的父级栏目为channelNo3,channelNo3的父级栏目为channelNo2,依次类推,根栏目level为空
+     * 注意：系统最多允许设置三级栏目
+     */
+    level?:string,
+
+    /**
+     * 栏目排序,接口返回是按升序排序的
+     */
+    sortBy:number,
+
+    /**
+     * 返回值与channelNo一致
+     */
+    key:string,
+    /**
+     * 返回复与name一致
+     */
+    title:string,
+
+    /**
+     * 隶属语言站点ID(全局唯一)
+     */
+    websiteId:string,
+    /**
+     * 隶属语言站点编号(全局唯一)
+     */
+    websiteNo:string,
+
+    /**
+     * 样
+     */
+    seoProps?:SeoProps,
+
+}
+
+/**
+ * 栏目类型
+ */
+export type ChannelType = 'page' | 'product' | 'article' | 'photo' | 'video' | 'activity'
+
+/**
+ * 会员卡收费方式
+ */
+export type MemberFeeType = 'monthly' | 'quarterly' | 'year' | 'forever';
+
+export type ImageVO = {
+    id:string,
+    name?:string,
+    thumbUrl:string,
+    imageUrl:string
+}
+
+export type WebsiteInfo={
+    "website":WebSite,
+    "i18nSites":Array<I18NWebsite>,
 }

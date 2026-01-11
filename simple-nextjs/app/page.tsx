@@ -1,7 +1,7 @@
-import {ICMSWebsite} from '@icms-api/server'
+import {ICMS} from '@icms-api/server'
 export default async function Home() {
-  const website = new ICMSWebsite({});
-  const model = await website.loadWebsiteInfo();
+  const icms = new ICMS();
+  const model = await icms.loadWebsite();
   return (
     <div>
       {
