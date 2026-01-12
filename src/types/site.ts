@@ -296,3 +296,17 @@ export type WebsiteInfo = {
     "website": WebSite,
     "i18nSites": Array<I18NWebsite>,
 }
+
+/**
+ * 会员增值服务
+ */
+export type MemberSrv = {
+    id:string,
+    /**
+     * 会员购买时记录该字段code,后台订单会自动翻译对应的会员卡
+     */
+    code:string,
+    name:string,
+    feeType:MemberFeeType,
+    fee?:number
+}

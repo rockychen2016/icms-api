@@ -1,4 +1,4 @@
-import { ImageVO, SeoProps } from "./site"
+import { ImageVO, MemberSrv, SeoProps } from "./site"
 
 /**
  * 附件类型
@@ -79,6 +79,44 @@ export interface AbsContent extends OwnerWebSite{
      * 缩略图
      */
     thumbUrl?:string
+}
+
+export type OwnerUser = {
+    id:string,
+    name:string,
+    nickname?:string,
+    avatar?:string,
+    userType:number
+}
+
+export type MemberSrvProp ={
+    memberSrvSet:Set<MemberSrv>
+}
+
+/**
+ * 知识付费基类
+ */
+export interface AbsCopyrightContent extends AbsContent{
+    /**
+     * 作者
+     */
+    author?:string,
+    /**
+     * 来源
+     */
+    source?:string,
+    /**
+     * 官方发布
+     */
+    official:boolean,
+    /**
+     * 发布人
+     */
+    ownerInfo?:OwnerUser,
+    /**
+     * 查阅权限,即当前登录用户有对应的会员卡方可以查看(集合中fee==0或该字段为空、所属最近层级的栏目memberSrvProp为空或fee==0的除外)
+     */
+    memberSrvProp?:MemberSrvProp
 }
 
 /**
