@@ -139,7 +139,7 @@ export interface WebSite {
     /**
      * 微信二维码
      */
-    wxQrcodeUrl?:string,
+    wxQrcodeUrl?: string,
 
     /**
      * 网站导航菜单
@@ -149,11 +149,11 @@ export interface WebSite {
     /**
      * 友情链接(sortBy 升序前20个链接)
      */
-    friendLinksList?:Array<FriendLink>
+    friendLinksList?: Array<FriendLink>
 }
 
 export interface Webchannel {
-    id:string,
+    id: string,
     /**
      * 栏目类型
      */
@@ -239,38 +239,38 @@ export interface Webchannel {
      */
     seoProps?: SeoProps,
 
-    children?:Array<WebsiteNavVO>
+    children?: Array<WebsiteNavVO>
 
 }
 
 /**
  * 友情链接
  */
-export interface FriendLink{
+export interface FriendLink {
     /**
      * id
      */
-    id:string,
+    id: string,
     /**
      * 链接名称
      */
-    name:string,
+    name: string,
     /**
      * 排序
      */
-    sortBy:number,
+    sortBy: number,
     /**
      * 链接说明
      */
-    description?:string,
+    description?: string,
     /**
      * 链接网址
      */
-    url:string,
+    url: string,
     /**
      * 是否可见
      */
-    visible:boolean
+    visible: boolean
 }
 
 export type WebsiteNavVO = Pick<Webchannel, 'id' | 'name' | 'channelNo' | 'channelType' | 'uri' | 'image' | 'jumpUrl' | 'jumpText' | 'subTitle' | 'level' | 'sortBy' | 'children'>
@@ -292,21 +292,49 @@ export type ImageVO = {
     imageUrl: string
 }
 
+export type Metadata = {
+    title?: string,
+    description?: string,
+    keywords?: string,
+    authors?: {
+        url: string,
+        name: string
+    },
+    [k: string]: unknown,
+}
+
 export type WebsiteInfo = {
     "website": WebSite,
     "i18nSites": Array<I18NWebsite>,
+    "metadata"?:Metadata
+}
+
+/**
+ * 会员用户相关资源的所有者
+ */
+export interface Owner{
+    id:string,
+    teamId:string,
+    siteId:string,
+}
+
+/**
+ * 隶属网站相关
+ */
+export interface WebsiteOwner extends Owner{
+    websiteId:string
 }
 
 /**
  * 会员增值服务
  */
-export type MemberSrv = {
-    id:string,
+export interface MemberSrv extends WebsiteOwner {
+    id: string,
     /**
      * 会员购买时记录该字段code,后台订单会自动翻译对应的会员卡
      */
-    code:string,
-    name:string,
-    feeType:MemberFeeType,
-    fee?:number
+    code: string,
+    name: string,
+    feeType: MemberFeeType,
+    fee?: number
 }

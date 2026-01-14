@@ -1,11 +1,22 @@
-import {ICMS} from '@icms-api/server'
+import { Metadata } from 'next';
+import { getWebsiteData } from './server';
+
+// 使用 generateMetadata 获取数据用于 metadata
+export async function generateMetadata(): Promise<Metadata> {
+  const model = await getWebsiteData();
+  return model?.metadata ?? {};
+}
+
 export default async function Home() {
-  const icms = new ICMS();
-  const model = await icms.loadWebsite();
-  //const model = await icms.loadChannels({showChildren:true});
-  //const model = await icms.loadChannelByUri({uri:'/about', showChildren:true})
-  //const model = await icms.loadChannelById({channelId:'C84291753196261376'})
-  //const model = await icms.loadProductPageInfo({pageNo:1, pageSize:20})
+  // 在 Page 组件中获取数据，每次请求都会重新获取
+  const model = await getWebsiteData();
+
+  // 如果需要其他数据获取方式，可以在这里调用
+  // const channels = await icms.loadChannels({showChildren:true});
+  // const channel = await icms.loadChannelByUri({uri:'/about', showChildren:true});
+  // const channelById = await icms.loadChannelById({channelId:'C84291753196261376'});
+  // const products = await icms.loadProductPageInfo({pageNo:1, pageSize:20});
+
   return (
     <div>
       {
