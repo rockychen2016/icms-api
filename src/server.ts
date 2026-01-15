@@ -31,7 +31,7 @@ export class ICMSServer {
             "websiteId": opts?.websiteId,
             "websiteNo": opts?.websiteNo,
             "userType": USER_TYPE_MAP.TYPE_C,
-            "helloURL": "guest/site/helloIBoot",
+            "helloURL": `${baseUrl.site}helloIBoot`,
         })
         console.log("env >>> ", process.env.NODE_ENV)
     }
@@ -309,8 +309,6 @@ export class ICMSServer {
         }
         throw new Error(res.msg);
     }
-
-
     //#endregion
 
 }
