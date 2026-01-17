@@ -22,6 +22,8 @@ const buildEmptyPageInfo = <T>({ pageNo, pageSize }: { pageNo: number, pageSize:
     }
 }
 
+export const helloURL = `${baseUrl.site}helloIBoot`;
+
 export class ICMSServer {
     private readonly http: HttpClient;
     constructor(opts?: Readonly<ServerHttpOpts>) {
@@ -31,7 +33,7 @@ export class ICMSServer {
             "websiteId": opts?.websiteId,
             "websiteNo": opts?.websiteNo,
             "userType": USER_TYPE_MAP.TYPE_C,
-            "helloURL": `${baseUrl.site}helloIBoot`,
+            "helloURL": helloURL,
         })
         console.log("env >>> ", process.env.NODE_ENV)
     }
@@ -41,7 +43,7 @@ export class ICMSServer {
      * 给要访问的网站打招呼，以获取网站相关请求头,该方法通常放在中间件或proxy中
      * @param store 
      */
-    async helloWebsite(store?: Readonly<{ storage?: IStorage, cookies?: ICookies }>) {
+    async helloWebsite(store?: Readonly<{ storage: IStorage, cookies: ICookies }>) {
         const url = baseUrl.site + "helloWebsite";
         const res = await this.http.get({ url: url });
         if (res.success) {
@@ -64,12 +66,8 @@ export class ICMSServer {
                 if (websiteNo && websiteNo.length > 0) {
                     values['websiteNo'] = websiteNo
                 }
-                if (store.cookies && store.cookies.set) {
-                    setServerHttpCookies(store.cookies, values);
-
-                } else if (store.storage && store.storage.set) {
-                    setServerHttpHeaders(store.storage, values);
-                }
+                setServerHttpHeaders(store.storage, values);
+                setServerHttpCookies(store.cookies, values);
             }
         }
     }

@@ -1,28 +1,12 @@
 import { ICMSServer } from "@icms-api/server";
-import {   getServerHttpCookies, ICookies } from "iboot-http-client";
+import { getServerHttpCookies, getServerHttpOpts, ICookies, IStorage, setServerHttpHeaders } from "iboot-http-client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest, response:NextResponse) {
+     
     const path = request.nextUrl.pathname;
-    console.log('current path >>> ', path);
-    let response = NextResponse.next();
-    response.headers.set('R-rock', '123')
-    if (path.startsWith('/')) {
-        const cookies: ICookies = {
-            get(key) {
-                return request.cookies.get(key)?.value
-            },
-            set(key, value, opts) {
-                response.cookies.set(key, value, opts);
-            },
-        }
-        const httpOpts = getServerHttpCookies(cookies);
-        console.log('---------------------------------------', httpOpts)
-        const icms = new ICMSServer(httpOpts);
-        await icms.helloWebsite({"cookies":cookies})
-    }
+    return NextResponse.next();
 
-    return response;
 }
 
 export const config = {
