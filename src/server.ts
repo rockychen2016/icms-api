@@ -1,4 +1,4 @@
-import { HttpClient, ICookies, IStorage, ServerHttpOpts, setServerHttpCookies, setServerHttpHeaders, USER_TYPE_MAP } from 'iboot-http-client';
+import { HttpClient, IStorage, ServerHttpOpts, setServerHttpHeaders, USER_TYPE_MAP } from 'iboot-http-client';
 import { I18NWebsite, Webchannel, WebSite, WebsiteInfo } from './types/site';
 import { ProductContent } from './types/cms-product';
 import { PageInfo, PageParams } from './types/cms-base';

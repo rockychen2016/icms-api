@@ -10,7 +10,8 @@ const { data } = await useAsyncData('website', async () => {
     if (import.meta.server) {
         const { ICMSServer } = await import('@icms-api/server');
         const icms = new ICMSServer();
-        return await icms.loadWebsite();
+        const res = await icms.loadWebsite();
+        return res;
     }
     return {data:"test"};
 });
