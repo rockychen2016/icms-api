@@ -6,14 +6,16 @@ export default defineNuxtConfig({
   // 添加别名配置，确保可以找到本地包
   alias: {
     'icms-api': '../src/index.ts',
-    '@icms-api/server': '../src/server.ts'
+    '@icms-api/server': '../src/server.ts',
+    '@icms-api/router': '../src/router.ts'
   },
 
   // 添加构建相关配置
   build: {
     transpile: [
       'icms-api',
-      '@icms-api/server'
+      '@icms-api/server',
+      '@icms-api/router'
     ]
   },
 
