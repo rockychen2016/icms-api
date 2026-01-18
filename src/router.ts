@@ -2,7 +2,7 @@ import { FrameworkAdapter, getServerHttpCookies, HTTPRouter, RouteStorage, USER_
 import { helloURL, ICMSServer } from "./server";
 
 const APIMAP = {
-
+    
 }
 export const icmsRouter = async <T, R>({
     request,
@@ -16,7 +16,7 @@ export const icmsRouter = async <T, R>({
     const options = getServerHttpCookies(storage.cookies);
     if (!options.websiteId || options.websiteId.trim().length === 0) {
         const icms = new ICMSServer();
-        await icms.helloWebsite({ storage: storage.headers, cookies: storage.cookies });
+        await icms.helloWebsite(storage.headers);
     }
     const res = new HTTPRouter({
         "config": {

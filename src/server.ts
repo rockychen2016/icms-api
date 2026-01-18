@@ -39,16 +39,12 @@ export class ICMSServer {
     }
 
     //#region ----网站及栏目
-    /**
-     * 给要访问的网站打招呼，以获取网站相关请求头,该方法通常放在中间件或proxy中
-     * @param store 
-     */
-    async helloWebsite(store?: Readonly<{ storage: IStorage, cookies: ICookies }>) {
+    async helloWebsite(headerStorage?:IStorage) {
         const url = baseUrl.site + "helloWebsite";
         const res = await this.http.get({ url: url });
         if (res.success) {
             const headers = res.headers;
-            if (store && headers) {
+            if (headerStorage && headers) {
                 const deviceId = headers['device-id'];
                 const lang = headers["lang"];
                 const websiteId = headers['web-id'];
@@ -66,8 +62,7 @@ export class ICMSServer {
                 if (websiteNo && websiteNo.length > 0) {
                     values['websiteNo'] = websiteNo
                 }
-                setServerHttpHeaders(store.storage, values);
-                setServerHttpCookies(store.cookies, values);
+                setServerHttpHeaders(headerStorage, values);
             }
         }
     }
