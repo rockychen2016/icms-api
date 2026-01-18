@@ -14,8 +14,9 @@ export const icmsRouter = async <T, R>({
     storage: RouteStorage
 }>): Promise<R> => {
     const options = getServerHttpCookies(storage.cookies);
+    console.log("options >>>> ", options)
+    const icms = new ICMSServer(options);
     if (!options.websiteId || options.websiteId.trim().length === 0) {
-        const icms = new ICMSServer();
         await icms.helloWebsite(storage.headers);
     }
     const res = new HTTPRouter({

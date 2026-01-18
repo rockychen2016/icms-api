@@ -1,14 +1,15 @@
 import { icmsRouter } from "@icms-api/router";
 import { NextJsAdapter } from "iboot-http-client";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
 
 }
 export async function POST(request: NextRequest) {
+    const adapter = new NextJsAdapter();
     return await icmsRouter({
         request: request,
-        routeAdapter: new NextJsAdapter(),
+        routeAdapter: adapter,
         storage: {
             headers: {
                 get(key) {
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
             cookies: {
                 get(key) {
                     return request.cookies.get(key)?.value;
-                }
+                },
             }
         }
     })
