@@ -9,7 +9,6 @@ const mycookie: ICookies = {
     },
 }
 const httpOpts = getServerHttpCookies(mycookie)
-console.log('----httpOpts >>>', httpOpts)
 const icms = new ICMSServer(httpOpts);
 
 

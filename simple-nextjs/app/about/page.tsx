@@ -1,5 +1,4 @@
 import { ICMSServer } from "@icms-api/server";
-import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 

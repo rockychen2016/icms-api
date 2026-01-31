@@ -1,11 +1,8 @@
 import { icmsRouter } from "@icms-api/router";
 import { NextJsAdapter } from "iboot-http-client";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
-export async function GET(request: NextRequest) {
-
-}
-export async function POST(request: NextRequest) {
+const routerHandle = async (request:NextRequest) => {
     const adapter = new NextJsAdapter();
     return await icmsRouter({
         request: request,
@@ -26,4 +23,11 @@ export async function POST(request: NextRequest) {
             }
         }
     })
+}
+
+export async function GET(request: NextRequest) {
+    return await routerHandle(request);
+}
+export async function POST(request: NextRequest) {
+    return await routerHandle(request);
 }
