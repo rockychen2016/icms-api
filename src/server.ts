@@ -1,4 +1,4 @@
-import { HttpClient, IStorage, ServerHttpOpts, setServerHttpHeaders, USER_TYPE_MAP } from 'iboot-http-client';
+import { getServerHttpCookies, getServerHttpOpts, HttpClient, ICookies, IStorage, ServerHttpOpts, setServerHttpCookies, setServerHttpHeaders, USER_TYPE_MAP } from 'iboot-http-client';
 import { I18NWebsite, Webchannel, WebSite, WebsiteInfo } from './types/site';
 import { ProductContent } from './types/cms-product';
 import { PageInfo, PageParams } from './types/cms-base';
@@ -26,30 +26,35 @@ export const helloURL = `${baseUrl.site}helloIBoot`;
 
 export class ICMSServer {
     private readonly http: HttpClient;
-    constructor(opts?: Readonly<ServerHttpOpts>) {
+    constructor(opts: Readonly<{ cookie: ICookies, headerStorage: IStorage }>) {
+        let httpOpts = getServerHttpOpts(opts.headerStorage);
+        if(!httpOpts.lang || !httpOpts.websiteId || !httpOpts.websiteNo) {
+            httpOpts = getServerHttpCookies(opts.cookie);
+        }
+        console.log('-----------httpOpts---------------', JSON.stringify(httpOpts));
         this.http = new HttpClient({
-            "deviceId": opts?.deviceId,
-            "lang": opts?.lang,
-            "websiteId": opts?.websiteId,
-            "websiteNo": opts?.websiteNo,
-            "userType": USER_TYPE_MAP.TYPE_C,
-            "helloURL": helloURL,
+            ...httpOpts,
+            userType: USER_TYPE_MAP.TYPE_C,
+            helloURL
         })
-        console.log("env >>> ", process.env.NODE_ENV)
+        if(!httpOpts.lang || !httpOpts.websiteId || !httpOpts.websiteNo){
+            this.helloWebsite(opts.headerStorage, opts.cookie);
+        }
     }
 
     //#region ----网站及栏目
-    async helloWebsite(headerStorage?:IStorage) {
+    private async helloWebsite(headerStorage: IStorage, cookie:ICookies) {
         const url = baseUrl.site + "helloWebsite";
         const res = await this.http.get({ url: url });
         if (res.success) {
             const headers = res.headers;
-            if (headerStorage && headers) {
+            if (headers) {
                 const deviceId = headers['device-id'];
                 const lang = headers["lang"];
                 const websiteId = headers['web-id'];
                 const websiteNo = headers["web-no"];
                 const values: Omit<ServerHttpOpts, 'userType' | 'helloURL'> = {}
+
                 if (deviceId && deviceId.length > 0) {
                     values['deviceId'] = deviceId
                 }
@@ -63,6 +68,7 @@ export class ICMSServer {
                     values['websiteNo'] = websiteNo
                 }
                 setServerHttpHeaders(headerStorage, values);
+                setServerHttpCookies(cookie, values);
             }
         }
     }

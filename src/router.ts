@@ -1,8 +1,8 @@
-import { FrameworkAdapter, getServerHttpCookies, HTTPRouter, RouteStorage, USER_TYPE_MAP } from "iboot-http-client";
-import { helloURL, ICMSServer } from "./server";
+import { FrameworkAdapter, HTTPRouter, RouteStorage, USER_TYPE_MAP } from "iboot-http-client";
+import { helloURL } from "./server";
 
 const APIMAP = {
-    
+
 }
 export const icmsRouter = async <T, R>({
     request,
@@ -13,11 +13,6 @@ export const icmsRouter = async <T, R>({
     routeAdapter: FrameworkAdapter
     storage: RouteStorage
 }>): Promise<R> => {
-    const options = getServerHttpCookies(storage.cookies);
-    const icms = new ICMSServer(options);
-    if (!options.websiteId || options.websiteId.trim().length === 0) {
-        await icms.helloWebsite(storage.headers);
-    }
     const res = new HTTPRouter({
         "config": {
             "userType": USER_TYPE_MAP.TYPE_B,
