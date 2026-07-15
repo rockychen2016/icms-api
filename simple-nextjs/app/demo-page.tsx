@@ -1,7 +1,15 @@
 import { ICMSServer } from '@icms-api/server'
+import { IStorage } from 'iboot-http-client';
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 
-const icms = new ICMSServer();
+const head = await headers();
+const h:IStorage = {
+  get(key) {
+    return head.get(key);
+  },
+}
+const icms = new ICMSServer({headerStorage:h});
 
 // 方案1：使用共享的数据获取函数 + generateMetadata
 // 这是解决重复获取问题的最佳方案

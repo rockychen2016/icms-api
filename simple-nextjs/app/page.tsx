@@ -1,15 +1,15 @@
 import { Metadata } from 'next';
-import { getWebsiteData } from './server';
+import { icms } from './server';
 
 // 使用 generateMetadata 获取数据用于 metadata
 export async function generateMetadata(): Promise<Metadata> {
-  const model = await getWebsiteData();
+  const model = await icms.loadWebsite();
   return model?.metadata ?? {};
 }
 
 export default async function Home() {
   // 在 Page 组件中获取数据，每次请求都会重新获取
-  const model = await getWebsiteData();
+  const model = await icms.loadWebsite();
 
   // 如果需要其他数据获取方式，可以在这里调用
   // const channels = await icms.loadChannels({showChildren:true});

@@ -1,4 +1,4 @@
-import { getServerHttpCookies, getServerHttpOpts, HttpClient, ICookies, IStorage, ServerHttpOpts, setServerHttpCookies, setServerHttpHeaders, USER_TYPE_MAP } from 'iboot-http-client';
+import { getServerHttpOpts, HttpClient, ICookies, IStorage, ServerHttpOpts, setServerHttpCookies, setServerHttpHeaders, USER_TYPE_MAP } from 'iboot-http-client';
 import { I18NWebsite, Webchannel, WebSite, WebsiteInfo } from './types/site';
 import { ProductContent } from './types/cms-product';
 import { PageInfo, PageParams } from './types/cms-base';
@@ -26,24 +26,17 @@ export const helloURL = `${baseUrl.site}helloIBoot`;
 
 export class ICMSServer {
     private readonly http: HttpClient;
-    constructor(opts: Readonly<{ cookie: ICookies, headerStorage: IStorage }>) {
+    constructor(opts: Readonly<{ headerStorage: IStorage }>) {
         let httpOpts = getServerHttpOpts(opts.headerStorage);
-        if(!httpOpts.lang || !httpOpts.websiteId || !httpOpts.websiteNo) {
-            httpOpts = getServerHttpCookies(opts.cookie);
-        }
-        console.log('-----------httpOpts---------------', JSON.stringify(httpOpts));
         this.http = new HttpClient({
             ...httpOpts,
             userType: USER_TYPE_MAP.TYPE_C,
             helloURL
         })
-        if(!httpOpts.lang || !httpOpts.websiteId || !httpOpts.websiteNo){
-            this.helloWebsite(opts.headerStorage, opts.cookie);
-        }
     }
 
     //#region ----网站及栏目
-    private async helloWebsite(headerStorage: IStorage, cookie:ICookies) {
+    async helloWebsite(h: IStorage, c: ICookies) {
         const url = baseUrl.site + "helloWebsite";
         const res = await this.http.get({ url: url });
         if (res.success) {
@@ -67,8 +60,8 @@ export class ICMSServer {
                 if (websiteNo && websiteNo.length > 0) {
                     values['websiteNo'] = websiteNo
                 }
-                setServerHttpHeaders(headerStorage, values);
-                setServerHttpCookies(cookie, values);
+                setServerHttpHeaders(h, values);
+                setServerHttpCookies(c, values);
             }
         }
     }
