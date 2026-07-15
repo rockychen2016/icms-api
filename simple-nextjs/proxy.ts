@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function proxy(request: NextRequest, response:NextResponse) {
-     
-    const path = request.nextUrl.pathname;
     return NextResponse.next();
-
 }
 
 export const config = {
