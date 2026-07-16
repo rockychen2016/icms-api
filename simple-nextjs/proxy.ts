@@ -26,19 +26,14 @@ export async function proxy(request: NextRequest) {
     if (httpOpts.lang && httpOpts.websiteId && httpOpts.websiteNo) {
         return NextResponse.next();
     }
+    const c = await cookies();
     const response = NextResponse.next();
     const icms = new ICMSServer({
-        headerStorage: {
-            get(key) {
-                return rh.get(key)
-            },
-        }
+        get(key) {
+            return c.get(key)?.value
+        },
     })
     await icms.helloWebsite({
-        set(key, value) {
-            response.headers.set(key, value);
-        }
-    }, {
         set(key, value) {
             response.cookies.set(key, value);
         },

@@ -1,4 +1,4 @@
-import { getServerHttpOpts, HttpClient, ICookies, IStorage, ServerHttpOpts, setServerHttpCookies, setServerHttpHeaders, USER_TYPE_MAP } from "@rock.chen/icms-http-client";
+import { getServerHttpCookies, HttpClient, ICookies, ServerHttpOpts, setServerHttpCookies, USER_TYPE_MAP } from "@rock.chen/icms-http-client";
 import { I18NWebsite, Webchannel, WebSite, WebsiteInfo } from './types/site';
 import { ProductContent } from './types/cms-product';
 import { PageInfo, PageParams } from './types/cms-base';
@@ -26,8 +26,8 @@ export const helloURL = `${baseUrl.site}helloIBoot`;
 
 export class ICMSServer {
     private readonly http: HttpClient;
-    constructor(opts: Readonly<{ headerStorage: IStorage }>) {
-        let httpOpts = getServerHttpOpts(opts.headerStorage);
+    constructor(cookies: Readonly<ICookies>) {
+        let httpOpts = getServerHttpCookies(cookies);
         this.http = new HttpClient({
             ...httpOpts,
             userType: USER_TYPE_MAP.TYPE_C,
@@ -36,7 +36,7 @@ export class ICMSServer {
     }
 
     //#region ----网站及栏目
-    async helloWebsite(h: IStorage, c: ICookies) {
+    async helloWebsite(c: ICookies) {
         const url = baseUrl.site + "helloWebsite";
         const res = await this.http.get({ url: url });
         if (res.success) {
@@ -60,7 +60,6 @@ export class ICMSServer {
                 if (websiteNo && websiteNo.length > 0) {
                     values['websiteNo'] = websiteNo
                 }
-                setServerHttpHeaders(h, values);
                 setServerHttpCookies(c, values);
             }
         }
