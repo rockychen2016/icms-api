@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies, headers } from "next/headers";
-import { getServerHttpCookies, getServerHttpOpts, ICookies, IStorage } from "iboot-http-client";
+import { getServerHttpCookies, getServerHttpOpts, ICookies, IStorage } from "@rock.chen/icms-http-client";
 import { ICMSServer } from "@icms-api/server";
 
 export async function proxy(request: NextRequest) {

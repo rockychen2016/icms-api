@@ -1,4 +1,4 @@
-import { FrameworkAdapter, HTTPRouter, RouteStorage, USER_TYPE_MAP } from "iboot-http-client";
+import { FrameworkAdapter, HTTPRouter, RouteStorage, USER_TYPE_MAP } from "@rock.chen/icms-http-client";
 import { helloURL } from "./server";
 
 const APIMAP = {

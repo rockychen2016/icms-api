@@ -1,5 +1,5 @@
 import { ICMSServer } from "@icms-api/server";
-import { IStorage } from "iboot-http-client";
+import { IStorage } from "@rock.chen/icms-http-client";
 import { headers } from "next/headers";
 
 // 定义获取数据的函数，可以在多个地方复用

@@ -1,5 +1,5 @@
 import { ICMSServer } from '@icms-api/server'
-import { IStorage } from 'iboot-http-client';
+import { IStorage } from "@rock.chen/icms-http-client";
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 

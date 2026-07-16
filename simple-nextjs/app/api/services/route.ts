@@ -1,5 +1,5 @@
 import { icmsRouter } from "@icms-api/router";
-import { NextJsAdapter } from "iboot-http-client";
+import { NextJsAdapter } from "@rock.chen/icms-http-client";
 import { NextRequest } from "next/server";
 
 const routerHandle = async (request:NextRequest) => {

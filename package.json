@@ -48,12 +48,13 @@
   "homepage": "https://github.com/rockychen2016/icms-api#readme",
   "devDependencies": {
     "@types/node": "^25.0.3",
+    "pino-pretty": "^13.1.3",
     "typescript": "~5.9.3",
     "vite": "^7.2.4",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^1.0.0"
   },
   "dependencies": {
-    "iboot-http-client": "^1.4.8"
+    "@rock.chen/icms-http-client": "^1.0.1"
   }
 }
