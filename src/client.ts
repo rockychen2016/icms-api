@@ -24,5 +24,4 @@ export class ICMSClient {
         }
         return undefined
     }
-    
 }

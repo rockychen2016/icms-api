@@ -1,11 +1,11 @@
-import { FrameworkAdapter, HTTPRouter, RouteStorage, USER_TYPE_MAP } from "@rock.chen/icms-http-client";
+import { FrameworkAdapter, HTTPRouter, ResponseContext, RouteStorage, USER_TYPE_MAP } from "@rock.chen/icms-http-client";
 import { helloURL } from "./server";
 
 //定义客户端接口
 const APIMAP = {
     
 }
-export const icmsRouter = async <T, R>({
+export const icmsRouter = async <T>({
     request,
     routeAdapter,
     storage
@@ -13,8 +13,8 @@ export const icmsRouter = async <T, R>({
     request: T,
     routeAdapter: FrameworkAdapter
     storage: RouteStorage
-}>): Promise<R> => {
-    const res = new HTTPRouter({
+}>): Promise<ResponseContext> => {
+    const router = new HTTPRouter({
         "config": {
             "userType": USER_TYPE_MAP.TYPE_C,
             "APIMAP": APIMAP,
@@ -23,5 +23,10 @@ export const icmsRouter = async <T, R>({
         "adapter": routeAdapter,
         "storage": storage
     });
-    return await res.handleRequest<T, R>(request);
+    const res = await router.handleRequest<T>(request);
+    if(res.cleanCookies){
+        //退出登录时
+        res.cleanCookies(storage.cookies)
+    }
+    return res
 }
