@@ -24,4 +24,7 @@ export class ICMSClient {
         }
         return undefined
     }
+    async logout(){
+        await iPost('logout');
+    }
 }
