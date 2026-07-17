@@ -10,7 +10,7 @@ export const icmsRouter = async <T, R>({
     routeAdapter,
     storage
 }: Readonly<{
-    request: T,
+    request: T
     routeAdapter: FrameworkAdapter<T, R>
     storage: RouteStorage
 }>): Promise<R> => {
