@@ -1,8 +1,9 @@
 import { FrameworkAdapter, HTTPRouter, RouteStorage, USER_TYPE_MAP } from "@rock.chen/icms-http-client";
 import { helloURL } from "./server";
 
+//定义客户端接口
 const APIMAP = {
-
+    
 }
 export const icmsRouter = async <T, R>({
     request,
@@ -15,7 +16,7 @@ export const icmsRouter = async <T, R>({
 }>): Promise<R> => {
     const res = new HTTPRouter({
         "config": {
-            "userType": USER_TYPE_MAP.TYPE_B,
+            "userType": USER_TYPE_MAP.TYPE_C,
             "APIMAP": APIMAP,
             "helloURL": helloURL
         },

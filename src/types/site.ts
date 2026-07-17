@@ -1,3 +1,5 @@
+import { User } from "@rock.chen/icms-http-client"
+
 /**
  * (国际化)语言站点,用于语言站点切换
  */
@@ -306,23 +308,23 @@ export type Metadata = {
 export type WebsiteInfo = {
     "website": WebSite,
     "i18nSites": Array<I18NWebsite>,
-    "metadata"?:Metadata
+    "metadata"?: Metadata
 }
 
 /**
  * 会员用户相关资源的所有者
  */
-export interface Owner{
-    id:string,
-    teamId:string,
-    siteId:string,
+export interface Owner {
+    id: string,
+    teamId: string,
+    siteId: string,
 }
 
 /**
  * 隶属网站相关
  */
-export interface WebsiteOwner extends Owner{
-    websiteId:string
+export interface WebsiteOwner extends Owner {
+    websiteId: string
 }
 
 /**
@@ -337,4 +339,8 @@ export interface MemberSrv extends WebsiteOwner {
     name: string,
     feeType: MemberFeeType,
     fee?: number
+}
+
+export interface Member extends User {
+    [key: string]: any
 }
