@@ -1,5 +1,6 @@
-import { getLoginUser, ICookies, iPost } from "@rock.chen/icms-http-client"
-import { Member } from "./types/site"
+import { getLoginUser, iPost } from "@rock.chen/icms-http-client/client"
+import type { ICookies } from "@rock.chen/icms-http-client/client"
+import type { Member } from "./types/site"
 
 export class ICMSClient {
     private cookies: ICookies | null = null
