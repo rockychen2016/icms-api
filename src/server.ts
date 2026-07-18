@@ -3,6 +3,9 @@ import { I18NWebsite, Webchannel, WebSite, WebsiteInfo, FriendLink, LinkGroup } 
 import { ProductContent } from './types/cms-product';
 import { PageInfo, PageParams } from './types/cms-base';
 import { NewsContent } from './types/cms-news';
+import { PhotoContent } from './types/cms-photo';
+import { VideoContent } from './types/cms-video';
+import { ActivityContent } from './types/cms-activity';
 import { Reviews, SubscribeUser, ContactUs } from './types/cms-message';
 import { SpecDescription } from './types/cms-mall';
 
@@ -281,15 +284,177 @@ export class ICMSServer {
     //#endregion
 
     //#region ----相册内容
+    /**
+     * 获取相册详情
+     * @param photoId 
+     * @returns 
+     */
+    async loadPhotoDetail(photoId: string): Promise<PhotoContent | undefined> {
+        const url = baseUrl.site + 'getPhoto';
+        const res = await this.http.get<PhotoContent>({ url, data: { "photoId": photoId } });
+        if (res.success) {
+            return res.data;
+        }
+        throw new Error(res.msg)
+    }
 
-    //#region 
+    /**
+     * 分页获取相册列表
+     * @param params {channelNo?:指定栏目下的内容, keyword?:关键字查询, pageNo:页码, pageSize:每页记录数, sortBy?:指定排序字段, sort?:排序方向'ASC' | 'DESC'}
+     * @returns 
+     */
+    async loadPhotoPageInfo(params: Readonly<{ channelNo?: string, keyword?: string } & PageParams>): Promise<PageInfo<PhotoContent>> {
+        const url = baseUrl.site + 'searchPhotoForPage';
+        const res = await this.http.get<PageInfo<PhotoContent>>({ url: url, data: { ...params } });
+        if (res.success) {
+            return res.data ?? buildEmptyPageInfo<PhotoContent>({ pageNo: params.pageNo, pageSize: params.pageSize });
+        }
+        throw new Error(res.msg)
+    }
+
+    /**
+     * 按分组分页获取相册列表
+     * @param params {groupId:分组ID, pageNo:页码, pageSize:每页记录数, sortBy?:指定排序字段, sort?:排序方向'ASC' | 'DESC'}
+     * @returns 
+     */
+    async loadPhotoPageInfoByGroup(params: Readonly<{ groupId: string } & PageParams>): Promise<PageInfo<PhotoContent>> {
+        const url = baseUrl.site + 'searchPhotoForPageByGroup';
+        const res = await this.http.get<PageInfo<PhotoContent>>({ url: url, data: { ...params } });
+        if (res.success) {
+            return res.data ?? buildEmptyPageInfo<PhotoContent>({ pageNo: params.pageNo, pageSize: params.pageSize });
+        }
+        throw new Error(res.msg)
+    }
+
+    /**
+     * 按分组获取相册列表
+     * @param params 
+     * @returns 
+     */
+    async loadPhotoListByGroupId(params: Readonly<{ groupId: string }>): Promise<Array<PhotoContent>> {
+        const url = baseUrl.site + 'searchPhotoByGroup';
+        const res = await this.http.get<Array<PhotoContent>>({ url: url, data: { ...params } });
+        if (res.success) {
+            return res.data ?? [];
+        }
+        throw new Error(res.msg)
+    }
+    //#endregion
 
     //#region ----视频内容
+    /**
+     * 获取视频详情
+     * @param videoId 
+     * @returns 
+     */
+    async loadVideoDetail(videoId: string): Promise<VideoContent | undefined> {
+        const url = baseUrl.site + 'getVideo';
+        const res = await this.http.get<VideoContent>({ url, data: { "videoId": videoId } });
+        if (res.success) {
+            return res.data;
+        }
+        throw new Error(res.msg)
+    }
 
+    /**
+     * 分页获取视频列表
+     * @param params {channelNo?:指定栏目下的内容, keyword?:关键字查询, pageNo:页码, pageSize:每页记录数, sortBy?:指定排序字段, sort?:排序方向'ASC' | 'DESC'}
+     * @returns 
+     */
+    async loadVideoPageInfo(params: Readonly<{ channelNo?: string, keyword?: string } & PageParams>): Promise<PageInfo<VideoContent>> {
+        const url = baseUrl.site + 'searchVideoForPage';
+        const res = await this.http.get<PageInfo<VideoContent>>({ url: url, data: { ...params } });
+        if (res.success) {
+            return res.data ?? buildEmptyPageInfo<VideoContent>({ pageNo: params.pageNo, pageSize: params.pageSize });
+        }
+        throw new Error(res.msg)
+    }
+
+    /**
+     * 按分组分页获取视频列表
+     * @param params {groupId:分组ID, pageNo:页码, pageSize:每页记录数, sortBy?:指定排序字段, sort?:排序方向'ASC' | 'DESC'}
+     * @returns 
+     */
+    async loadVideoPageInfoByGroup(params: Readonly<{ groupId: string } & PageParams>): Promise<PageInfo<VideoContent>> {
+        const url = baseUrl.site + 'searchVideoForPageByGroup';
+        const res = await this.http.get<PageInfo<VideoContent>>({ url: url, data: { ...params } });
+        if (res.success) {
+            return res.data ?? buildEmptyPageInfo<VideoContent>({ pageNo: params.pageNo, pageSize: params.pageSize });
+        }
+        throw new Error(res.msg)
+    }
+
+    /**
+     * 按分组获取视频列表
+     * @param params 
+     * @returns 
+     */
+    async loadVideoListByGroupId(params: Readonly<{ groupId: string }>): Promise<Array<VideoContent>> {
+        const url = baseUrl.site + 'searchVideoByGroup';
+        const res = await this.http.get<Array<VideoContent>>({ url: url, data: { ...params } });
+        if (res.success) {
+            return res.data ?? [];
+        }
+        throw new Error(res.msg)
+    }
     //#endregion
 
     //#region ----活动内容
+    /**
+     * 获取活动详情
+     * @param activityId 
+     * @returns 
+     */
+    async loadActivityDetail(activityId: string): Promise<ActivityContent | undefined> {
+        const url = baseUrl.site + 'getActivity';
+        const res = await this.http.get<ActivityContent>({ url, data: { "activityId": activityId } });
+        if (res.success) {
+            return res.data;
+        }
+        throw new Error(res.msg)
+    }
 
+    /**
+     * 分页获取活动列表
+     * @param params {channelNo?:指定栏目下的内容, keyword?:关键字查询, pageNo:页码, pageSize:每页记录数, sortBy?:指定排序字段, sort?:排序方向'ASC' | 'DESC'}
+     * @returns 
+     */
+    async loadActivityPageInfo(params: Readonly<{ channelNo?: string, keyword?: string } & PageParams>): Promise<PageInfo<ActivityContent>> {
+        const url = baseUrl.site + 'searchActivityForPage';
+        const res = await this.http.get<PageInfo<ActivityContent>>({ url: url, data: { ...params } });
+        if (res.success) {
+            return res.data ?? buildEmptyPageInfo<ActivityContent>({ pageNo: params.pageNo, pageSize: params.pageSize });
+        }
+        throw new Error(res.msg)
+    }
+
+    /**
+     * 按分组分页获取活动列表
+     * @param params {groupId:分组ID, pageNo:页码, pageSize:每页记录数, sortBy?:指定排序字段, sort?:排序方向'ASC' | 'DESC'}
+     * @returns 
+     */
+    async loadActivityPageInfoByGroup(params: Readonly<{ groupId: string } & PageParams>): Promise<PageInfo<ActivityContent>> {
+        const url = baseUrl.site + 'searchActivityForPageByGroup';
+        const res = await this.http.get<PageInfo<ActivityContent>>({ url: url, data: { ...params } });
+        if (res.success) {
+            return res.data ?? buildEmptyPageInfo<ActivityContent>({ pageNo: params.pageNo, pageSize: params.pageSize });
+        }
+        throw new Error(res.msg)
+    }
+
+    /**
+     * 按分组获取活动列表
+     * @param params 
+     * @returns 
+     */
+    async loadActivityListByGroupId(params: Readonly<{ groupId: string }>): Promise<Array<ActivityContent>> {
+        const url = baseUrl.site + 'searchActivityByGroup';
+        const res = await this.http.get<Array<ActivityContent>>({ url: url, data: { ...params } });
+        if (res.success) {
+            return res.data ?? [];
+        }
+        throw new Error(res.msg)
+    }
     //#endregion
 
     //#region ----订阅、评论、留言

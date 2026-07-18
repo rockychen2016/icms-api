@@ -20,6 +20,21 @@ const APIMAP: Record<string, string> = {
     loadNewsPageInfo: "guest/site/searchNewsForPage",
     loadNewsPageInfoByGroupId: "guest/site/searchNewsForPageByGroup",
     loadNewsListByGroupId: "guest/site/searchNewsByGroup",
+    // 相册
+    loadPhotoDetail: "guest/site/getPhoto",
+    loadPhotoPageInfo: "guest/site/searchPhotoForPage",
+    loadPhotoPageInfoByGroup: "guest/site/searchPhotoForPageByGroup",
+    loadPhotoListByGroupId: "guest/site/searchPhotoByGroup",
+    // 视频
+    loadVideoDetail: "guest/site/getVideo",
+    loadVideoPageInfo: "guest/site/searchVideoForPage",
+    loadVideoPageInfoByGroup: "guest/site/searchVideoForPageByGroup",
+    loadVideoListByGroupId: "guest/site/searchVideoByGroup",
+    // 活动
+    loadActivityDetail: "guest/site/getActivity",
+    loadActivityPageInfo: "guest/site/searchActivityForPage",
+    loadActivityPageInfoByGroup: "guest/site/searchActivityForPageByGroup",
+    loadActivityListByGroupId: "guest/site/searchActivityByGroup",
     // 评论/订阅/联系
     loadReviewList: "guest/site/getReviewList",
     submitComment: "guest/site/comment",

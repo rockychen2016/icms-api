@@ -2,6 +2,9 @@ import type { Member, FriendLink, LinkGroup, I18NWebsite, Webchannel, WebsiteInf
 import type { ProductContent } from "./types/cms-product"
 import type { PageInfo, PageParams } from "./types/cms-base"
 import type { NewsContent } from "./types/cms-news"
+import type { PhotoContent } from "./types/cms-photo"
+import type { VideoContent } from "./types/cms-video"
+import type { ActivityContent } from "./types/cms-activity"
 import type { Reviews, SubscribeUser, ContactUs } from "./types/cms-message"
 import type { SpecDescription } from "./types/cms-mall"
 import { getLoginUser, ICookies, iGet, iPost, iPostSuccess } from "@rock.chen/icms-http-client"
@@ -107,6 +110,60 @@ export class ICMSClient {
 
     async loadNewsListByGroupId(params: Readonly<{ groupId: string }>): Promise<Array<NewsContent>> {
         return (await iGet<Array<NewsContent>>("loadNewsListByGroupId", { data: { groupId: params.groupId } })) ?? []
+    }
+
+    // ========== 相册 ==========
+
+    async loadPhotoDetail(photoId: string): Promise<PhotoContent | undefined> {
+        return iGet<PhotoContent>("loadPhotoDetail", { data: { photoId } })
+    }
+
+    async loadPhotoPageInfo(params: Readonly<{ channelNo?: string; keyword?: string } & PageParams>): Promise<PageInfo<PhotoContent> | undefined> {
+        return iGet<PageInfo<PhotoContent>>("loadPhotoPageInfo", { data: { ...params, pageNo: String(params.pageNo), pageSize: String(params.pageSize) } })
+    }
+
+    async loadPhotoPageInfoByGroup(params: Readonly<{ groupId: string } & PageParams>): Promise<PageInfo<PhotoContent> | undefined> {
+        return iGet<PageInfo<PhotoContent>>("loadPhotoPageInfoByGroup", { data: { ...params, pageNo: String(params.pageNo), pageSize: String(params.pageSize) } })
+    }
+
+    async loadPhotoListByGroupId(params: Readonly<{ groupId: string }>): Promise<Array<PhotoContent>> {
+        return (await iGet<Array<PhotoContent>>("loadPhotoListByGroupId", { data: { groupId: params.groupId } })) ?? []
+    }
+
+    // ========== 视频 ==========
+
+    async loadVideoDetail(videoId: string): Promise<VideoContent | undefined> {
+        return iGet<VideoContent>("loadVideoDetail", { data: { videoId } })
+    }
+
+    async loadVideoPageInfo(params: Readonly<{ channelNo?: string; keyword?: string } & PageParams>): Promise<PageInfo<VideoContent> | undefined> {
+        return iGet<PageInfo<VideoContent>>("loadVideoPageInfo", { data: { ...params, pageNo: String(params.pageNo), pageSize: String(params.pageSize) } })
+    }
+
+    async loadVideoPageInfoByGroup(params: Readonly<{ groupId: string } & PageParams>): Promise<PageInfo<VideoContent> | undefined> {
+        return iGet<PageInfo<VideoContent>>("loadVideoPageInfoByGroup", { data: { ...params, pageNo: String(params.pageNo), pageSize: String(params.pageSize) } })
+    }
+
+    async loadVideoListByGroupId(params: Readonly<{ groupId: string }>): Promise<Array<VideoContent>> {
+        return (await iGet<Array<VideoContent>>("loadVideoListByGroupId", { data: { groupId: params.groupId } })) ?? []
+    }
+
+    // ========== 活动 ==========
+
+    async loadActivityDetail(activityId: string): Promise<ActivityContent | undefined> {
+        return iGet<ActivityContent>("loadActivityDetail", { data: { activityId } })
+    }
+
+    async loadActivityPageInfo(params: Readonly<{ channelNo?: string; keyword?: string } & PageParams>): Promise<PageInfo<ActivityContent> | undefined> {
+        return iGet<PageInfo<ActivityContent>>("loadActivityPageInfo", { data: { ...params, pageNo: String(params.pageNo), pageSize: String(params.pageSize) } })
+    }
+
+    async loadActivityPageInfoByGroup(params: Readonly<{ groupId: string } & PageParams>): Promise<PageInfo<ActivityContent> | undefined> {
+        return iGet<PageInfo<ActivityContent>>("loadActivityPageInfoByGroup", { data: { ...params, pageNo: String(params.pageNo), pageSize: String(params.pageSize) } })
+    }
+
+    async loadActivityListByGroupId(params: Readonly<{ groupId: string }>): Promise<Array<ActivityContent>> {
+        return (await iGet<Array<ActivityContent>>("loadActivityListByGroupId", { data: { groupId: params.groupId } })) ?? []
     }
 
     // ========== 评论/订阅/联系 ==========
