@@ -1,17 +1,45 @@
 import { FrameworkAdapter, HTTPRouter, RouteStorage, USER_TYPE_MAP } from "@rock.chen/icms-http-client";
 import { helloURL } from "./server";
 
-//定义客户端接口
-const APIMAP = {
-
+// 定义客户端接口映射：方法名 → iCMS API 路径
+const APIMAP: Record<string, string> = {
+    // 网站
+    loadI18nList: "guest/site/i18nList",
+    loadWebsite: "guest/site/currentWebSite",
+    loadChannels: "guest/site/getChannelListByNo",
+    loadChannelById: "guest/site/getChannelById",
+    loadChannelByNo: "guest/site/getChannelByNo",
+    loadChannelByUri: "guest/site/getChannelByUrl",
+    // 产品
+    loadProductDetail: "guest/site/getProduct",
+    loadProductPageInfo: "guest/site/searchProductForPage",
+    loadProductPageInfoByGroup: "guest/site/searchProductForPageByGroup",
+    loadProductListByGroupId: "guest/site/searchProductByGroup",
+    // 图文
+    loadNewsDetail: "guest/site/getNewsDetail",
+    loadNewsPageInfo: "guest/site/searchNewsForPage",
+    loadNewsPageInfoByGroupId: "guest/site/searchNewsForPageByGroup",
+    loadNewsListByGroupId: "guest/site/searchNewsByGroup",
+    // 评论/订阅/联系
+    loadReviewList: "guest/site/getReviewList",
+    submitComment: "guest/site/comment",
+    subscribe: "guest/site/userSubscribe",
+    submitContactUs: "guest/site/contactUs",
+    // 友链
+    loadLinkGroups: "guest/site/getLinkGroupList",
+    loadFriendLinks: "guest/site/getFriendLinks",
+    submitLink: "guest/site/addLink",
+    // 商城
+    getSpecDescription: "guest/site/shop/getSpecDescription",
 }
+
 export const icmsRouter = async <T, R>({
     request,
     routeAdapter,
     storage
 }: Readonly<{
-    request: T
-    routeAdapter: FrameworkAdapter<T, R>
+    request: T,
+    routeAdapter: FrameworkAdapter<T, R>,
     storage: RouteStorage
 }>): Promise<R> => {
     const router = new HTTPRouter({

@@ -275,6 +275,17 @@ export interface FriendLink {
     visible: boolean
 }
 
+/**
+ * 链接分组
+ */
+export interface LinkGroup {
+    id: string,
+    /** 分组名称 */
+    name: string,
+    /** 分组下的链接列表 */
+    friendLinkList?: Array<FriendLink>
+}
+
 export type WebsiteNavVO = Pick<Webchannel, 'id' | 'name' | 'channelNo' | 'channelType' | 'uri' | 'image' | 'jumpUrl' | 'jumpText' | 'subTitle' | 'level' | 'sortBy' | 'children'>
 
 /**

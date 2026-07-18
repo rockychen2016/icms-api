@@ -1,9 +1,10 @@
 import { getServerHttpCookies, HttpClient, ICookies, ServerHttpOpts, setServerHttpCookies, USER_TYPE_MAP } from "@rock.chen/icms-http-client";
-import { I18NWebsite, Webchannel, WebSite, WebsiteInfo } from './types/site';
+import { I18NWebsite, Webchannel, WebSite, WebsiteInfo, FriendLink, LinkGroup } from './types/site';
 import { ProductContent } from './types/cms-product';
 import { PageInfo, PageParams } from './types/cms-base';
 import { NewsContent } from './types/cms-news';
-import { Reviews } from './types/cms-message';
+import { Reviews, SubscribeUser, ContactUs } from './types/cms-message';
+import { SpecDescription } from './types/cms-mall';
 
 const baseUrl = {
     "site": "guest/site/",
@@ -292,11 +293,96 @@ export class ICMSServer {
     //#endregion
 
     //#region ----订阅、评论、留言
+    /**
+     * 获取评论列表
+     */
     async loadReviewList(params: Readonly<{ entityNo?: string, rowCount?: string }>): Promise<Array<Reviews>> {
         const url = baseUrl.site + 'getReviewList';
         const res = await this.http.get<Array<Reviews>>({ url: url, data: { ...params, rowCount: params.rowCount ?? 20 } });
         if (res.success) {
             return res.data ?? []
+        }
+        throw new Error(res.msg);
+    }
+
+    /**
+     * 发表评论
+     * @param data 评论数据
+     */
+    async submitComment(data: Readonly<Partial<Reviews>>): Promise<boolean> {
+        const url = baseUrl.site + 'comment';
+        const res = await this.http.post({ url, data: data as Record<string, any> });
+        return res.success;
+    }
+
+    /**
+     * 订阅
+     * @param data 订阅数据 {email, nickname?}
+     */
+    async subscribe(data: Readonly<Pick<SubscribeUser, 'email'> & Partial<Pick<SubscribeUser, 'nickname'>>>): Promise<boolean> {
+        const url = baseUrl.site + 'userSubscribe';
+        const res = await this.http.post({ url, data: data as Record<string, any> });
+        return res.success;
+    }
+
+    /**
+     * 联系我们留言
+     * @param data 留言数据
+     */
+    async submitContactUs(data: Readonly<Partial<ContactUs>>): Promise<boolean> {
+        const url = baseUrl.site + 'contactUs';
+        const res = await this.http.post({ url, data: data as Record<string, any> });
+        return res.success;
+    }
+    //#endregion
+
+    //#region ----友情链接
+    /**
+     * 获取链接分组列表（含友链）
+     */
+    async loadLinkGroups(): Promise<Array<LinkGroup>> {
+        const url = baseUrl.site + 'getLinkGroupList';
+        const res = await this.http.get<Array<LinkGroup>>({ url });
+        if (res.success) {
+            return res.data ?? [];
+        }
+        throw new Error(res.msg);
+    }
+
+    /**
+     * 获取友情链接列表
+     * @param count 获取数量，不传则全部
+     */
+    async loadFriendLinks(count?: number): Promise<Array<FriendLink>> {
+        const url = baseUrl.site + 'getFriendLinks';
+        const res = await this.http.get<Array<FriendLink>>({ url, data: count ? { count: String(count) } : undefined });
+        if (res.success) {
+            return res.data ?? [];
+        }
+        throw new Error(res.msg);
+    }
+
+    /**
+     * 申请添加友链
+     * @param data 友链数据 {name, url, description?}
+     */
+    async submitLink(data: Readonly<Pick<FriendLink, 'name' | 'url'> & Partial<Pick<FriendLink, 'description'>>>): Promise<boolean> {
+        const url = baseUrl.site + 'addLink';
+        const res = await this.http.post({ url, data: data as Record<string, any> });
+        return res.success;
+    }
+    //#endregion
+
+    //#region ----商城
+    /**
+     * 获取商品规格描述
+     * @param code 规格编码
+     */
+    async getSpecDescription(code: string): Promise<SpecDescription | undefined> {
+        const url = baseUrl.shop + 'getSpecDescription';
+        const res = await this.http.get<SpecDescription>({ url, data: { code } });
+        if (res.success) {
+            return res.data;
         }
         throw new Error(res.msg);
     }
