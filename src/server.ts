@@ -573,7 +573,7 @@ export class ICMSServer {
     }
 
     /** 获取指定货架的商品列表 */
-    async loadCategoryGoods(params: Readonly<{ cateCode: string; count?: number }>): Promise<Array<GoodsItem>> {
+    async loadCategoryGoods(params?: Readonly<{ cateCode: string; count?: number }>): Promise<Array<GoodsItem>> {
         const url = baseUrl.shop + 'getCategoryGoods';
         const res = await this.http.get<Array<GoodsItem>>({ url, data: { ...params } });
         if (res.success) {

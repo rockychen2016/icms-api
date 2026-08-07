@@ -215,9 +215,10 @@ export class ICMSClient {
     }
 
     /** 获取指定货架的商品列表 */
-    async loadCategoryGoods(params: Readonly<{ cateCode: string; count?: number }>): Promise<Array<GoodsItem>> {
-        const data: Record<string, string> = { cateCode: params.cateCode }
-        if (params.count !== undefined) data.count = String(params.count)
+    async loadCategoryGoods(params?: Readonly<{ cateCode: string; count?: number }>): Promise<Array<GoodsItem>> {
+        const data: Record<string, string> = {}
+        if (params?.cateCode) data.cateCode = params.cateCode
+        if (params?.count !== undefined) data.count = String(params.count)
         return (await iGet<Array<GoodsItem>>("getCategoryGoods", { data })) ?? []
     }
 
