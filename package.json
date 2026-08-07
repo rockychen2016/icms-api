@@ -1,7 +1,7 @@
 {
   "name": "icms-api",
   "private": false,
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "对iCMS内容管理系统API的封装，使用该API能快速使用iCMS搭建您的WebApp!",
   "type": "module",
   "main": "./dist/icms-api.cjs.js",

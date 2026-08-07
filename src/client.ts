@@ -7,7 +7,7 @@ import type { VideoContent } from "./types/cms-video"
 import type { ActivityContent } from "./types/cms-activity"
 import type { Reviews, SubscribeUser, ContactUs } from "./types/cms-message"
 import type { SpecDescription } from "./types/cms-mall"
-import { getLoginUser, ICookies, iGet, iPost, iPostSuccess } from "@rock.chen/icms-http-client"
+import { getLoginUser, ICookies, iGet, iPost, iPostSuccess } from "./client-helper"
 
 
 export class ICMSClient {

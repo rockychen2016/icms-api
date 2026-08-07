@@ -19,7 +19,7 @@ export default defineConfig({
       formats: ['es', 'cjs']
     },
     rollupOptions: {
-      external: ['pino', 'pino-pretty', 'js-md5', 'crypto-js', 'next-server-context', 'h3', '@rock.chen/icms-http-client'],
+      external: ['pino', 'pino-pretty', 'js-md5', 'crypto-js', 'next-server-context', 'h3'],
       output: {
         globals: {
           'pino': 'pino',
@@ -28,7 +28,6 @@ export default defineConfig({
           'crypto-js': 'CryptoJS',
           'next-server-context': 'next-server-context',
           'h3': 'h3',
-          '@rock.chen/icms-http-client': 'icmsHttpClient',
         },
       }
     },
