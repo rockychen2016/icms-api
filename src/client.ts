@@ -6,7 +6,7 @@ import type { PhotoContent } from "./types/cms-photo"
 import type { VideoContent } from "./types/cms-video"
 import type { ActivityContent } from "./types/cms-activity"
 import type { Reviews, SubscribeUser, ContactUs } from "./types/cms-message"
-import type { SpecDescription } from "./types/cms-mall"
+import type { SpecDescription, GoodsItem, GoodsCategory, GoodsTag } from "./types/cms-mall"
 import { getLoginUser, ICookies, iGet, iPost, iPostSuccess } from "./client-helper"
 
 
@@ -202,6 +202,28 @@ export class ICMSClient {
 
     async getSpecDescription(code: string): Promise<SpecDescription | undefined> {
         return iGet<SpecDescription>("getSpecDescription", { data: { code } })
+    }
+
+    /** 获取商品标签字典 */
+    async loadGoodsTagList(): Promise<Array<GoodsTag>> {
+        return (await iGet<Array<GoodsTag>>("getGoodsTagList")) ?? []
+    }
+
+    /** 获取所有货架（类目）列表 */
+    async loadGoodsShelves(): Promise<Array<GoodsCategory>> {
+        return (await iGet<Array<GoodsCategory>>("getGoodsShelves")) ?? []
+    }
+
+    /** 获取指定货架的商品列表 */
+    async loadCategoryGoods(params: Readonly<{ cateCode: string; count?: number }>): Promise<Array<GoodsItem>> {
+        const data: Record<string, string> = { cateCode: params.cateCode }
+        if (params.count !== undefined) data.count = String(params.count)
+        return (await iGet<Array<GoodsItem>>("getCategoryGoods", { data })) ?? []
+    }
+
+    /** 分页搜索商品 */
+    async searchGoods(params: Readonly<{ cateCode?: string; keyword?: string } & PageParams>): Promise<PageInfo<GoodsItem> | undefined> {
+        return iGet<PageInfo<GoodsItem>>("searchGoods", { data: { ...params, pageNo: String(params.pageNo), pageSize: String(params.pageSize) } })
     }
 }
 

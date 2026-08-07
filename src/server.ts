@@ -7,7 +7,7 @@ import { PhotoContent } from './types/cms-photo';
 import { VideoContent } from './types/cms-video';
 import { ActivityContent } from './types/cms-activity';
 import { Reviews, SubscribeUser, ContactUs } from './types/cms-message';
-import { SpecDescription } from './types/cms-mall';
+import { SpecDescription, GoodsItem, GoodsCategory, GoodsTag } from './types/cms-mall';
 
 const baseUrl = {
     "site": "guest/site/",
@@ -548,6 +548,46 @@ export class ICMSServer {
         const res = await this.http.get<SpecDescription>({ url, data: { code } });
         if (res.success) {
             return res.data;
+        }
+        throw new Error(res.msg);
+    }
+
+    /** 获取商品标签字典 */
+    async loadGoodsTagList(): Promise<Array<GoodsTag>> {
+        const url = baseUrl.shop + 'getGoodsTagList';
+        const res = await this.http.get<Array<GoodsTag>>({ url });
+        if (res.success) {
+            return res.data ?? [];
+        }
+        throw new Error(res.msg);
+    }
+
+    /** 获取所有货架（类目）列表 */
+    async loadGoodsShelves(): Promise<Array<GoodsCategory>> {
+        const url = baseUrl.shop + 'getGoodsShelves';
+        const res = await this.http.get<Array<GoodsCategory>>({ url });
+        if (res.success) {
+            return res.data ?? [];
+        }
+        throw new Error(res.msg);
+    }
+
+    /** 获取指定货架的商品列表 */
+    async loadCategoryGoods(params: Readonly<{ cateCode: string; count?: number }>): Promise<Array<GoodsItem>> {
+        const url = baseUrl.shop + 'getCategoryGoods';
+        const res = await this.http.get<Array<GoodsItem>>({ url, data: { ...params } });
+        if (res.success) {
+            return res.data ?? [];
+        }
+        throw new Error(res.msg);
+    }
+
+    /** 分页搜索商品 */
+    async searchGoods(params: Readonly<{ cateCode?: string; keyword?: string } & PageParams>): Promise<PageInfo<GoodsItem>> {
+        const url = baseUrl.shop + 'searchGoods';
+        const res = await this.http.get<PageInfo<GoodsItem>>({ url, data: { ...params } });
+        if (res.success) {
+            return res.data ?? buildEmptyPageInfo<GoodsItem>({ pageNo: params.pageNo, pageSize: params.pageSize });
         }
         throw new Error(res.msg);
     }
