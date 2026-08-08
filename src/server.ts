@@ -7,7 +7,7 @@ import { PhotoContent } from './types/cms-photo';
 import { VideoContent } from './types/cms-video';
 import { ActivityContent } from './types/cms-activity';
 import { Reviews, SubscribeUser, ContactUs } from './types/cms-message';
-import { SpecDescription, GoodsItem, GoodsCategory, GoodsTag } from './types/cms-mall';
+import { SpecDescription, GoodsItem, GoodsDetail, GoodsCategory, GoodsTag } from './types/cms-mall';
 
 const baseUrl = {
     "site": "guest/site/",
@@ -588,6 +588,16 @@ export class ICMSServer {
         const res = await this.http.get<PageInfo<GoodsItem>>({ url, data: { ...params } });
         if (res.success) {
             return res.data ?? buildEmptyPageInfo<GoodsItem>({ pageNo: params.pageNo, pageSize: params.pageSize });
+        }
+        throw new Error(res.msg);
+    }
+
+    /** 获取商品详情（含 detailContent HTML） */
+    async getGoodsDetail(goodsListedId: string): Promise<GoodsDetail | undefined> {
+        const url = baseUrl.shop + 'getGoodsDetail';
+        const res = await this.http.get<GoodsDetail>({ url, data: { goodsListedId } });
+        if (res.success) {
+            return res.data;
         }
         throw new Error(res.msg);
     }
