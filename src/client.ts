@@ -57,6 +57,18 @@ export class ICMSClient {
     }
 
     /**
+     * 发送邮箱验证码（注册/找回密码用）
+     * @param account 邮箱地址
+     * @returns 是否发送成功
+     */
+    async sendVCode(account: string): Promise<boolean> {
+        const result = await iPost<number>('sendcode', {
+            data: { account }
+        })
+        return result === 1
+    }
+
+    /**
      * 检查用户名（手机号/邮箱）是否已注册
      */
     async checkRegistered(username: string): Promise<boolean> {

@@ -6,6 +6,7 @@ const APIMAP: Record<string, string> = {
     // 认证/注册
     register: "guest/register",
     checkRegister: "guest/checkRegister",
+    sendcode: "guest/sendVCode",
     // 网站
     loadI18nList: "guest/site/i18nList",
     loadWebsite: "guest/site/currentWebSite",
