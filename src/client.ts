@@ -37,6 +37,35 @@ export class ICMSClient {
         await iPost('logout');
     }
 
+    // ========== 用户注册 ==========
+
+    /**
+     * 注册 C 端会员（手机号/邮箱 + 密码）
+     * @param username 手机号或邮箱
+     * @param password 密码
+     * @param nickname 昵称（可选）
+     * @returns 注册成功且已登录时返回 Member，否则 undefined
+     */
+    async register({ username, password, nickname }: Readonly<{ username: string, password: string, nickname?: string }>): Promise<Member | undefined> {
+        await iPost('register', {
+            data: { username, password, nickname }
+        })
+        if (this.cookies) {
+            return getLoginUser(this.cookies)
+        }
+        return undefined
+    }
+
+    /**
+     * 检查用户名（手机号/邮箱）是否已注册
+     */
+    async checkRegistered(username: string): Promise<boolean> {
+        const result = await iGet<boolean>('checkRegister', {
+            data: { username }
+        })
+        return result ?? false
+    }
+
     // ========== 网站信息 ==========
 
     async loadI18nList(): Promise<Array<I18NWebsite>> {

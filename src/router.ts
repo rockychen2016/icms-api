@@ -3,6 +3,9 @@ import { helloURL } from "./server";
 
 // 定义客户端接口映射：方法名 → iCMS API 路径
 const APIMAP: Record<string, string> = {
+    // 认证/注册
+    register: "guest/register",
+    checkRegister: "guest/checkRegister",
     // 网站
     loadI18nList: "guest/site/i18nList",
     loadWebsite: "guest/site/currentWebSite",
