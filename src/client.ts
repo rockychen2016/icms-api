@@ -40,15 +40,16 @@ export class ICMSClient {
     // ========== 用户注册 ==========
 
     /**
-     * 注册 C 端会员（手机号/邮箱 + 密码）
+     * 注册 C 端会员（手机号/邮箱 + 密码 + 邮箱验证码）
      * @param username 手机号或邮箱
      * @param password 密码
+     * @param validateCode 邮箱验证码（发送验证码后填写）
      * @param nickname 昵称（可选）
      * @returns 注册成功且已登录时返回 Member，否则 undefined
      */
-    async register({ username, password, nickname }: Readonly<{ username: string, password: string, nickname?: string }>): Promise<Member | undefined> {
+    async register({ username, password, validateCode, nickname }: Readonly<{ username: string, password: string, validateCode: string, nickname?: string }>): Promise<Member | undefined> {
         await iPost('register', {
-            data: { username, password, nickname }
+            data: { username, password, validateCode, nickname }
         })
         if (this.cookies) {
             return getLoginUser(this.cookies)
