@@ -144,6 +144,7 @@ const post = async <T>(
   urlName: string,
   opts?: ClientPostParams,
 ): Promise<ResultModel<T>> => {
+  const url = getBaseUrl(urlName);
   const data = opts?.data ?? {};
   let body: string | FormData;
   const proxyHeaders = new Headers(opts?.headers);
@@ -153,8 +154,8 @@ const post = async <T>(
   } else {
     body = data;
   }
-  logger.info({ url: urlName, headers: proxyHeaders }, "POST");
-  const res = await fetch(urlName, {
+  logger.info({ url: url, headers: proxyHeaders }, "POST");
+  const res = await fetch(url, {
     method: "POST",
     headers: proxyHeaders,
     body,
