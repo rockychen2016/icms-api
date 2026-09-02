@@ -61,6 +61,6 @@
     "vitest": "^1.0.0"
   },
   "dependencies": {
-    "@rock.chen/icms-http-client": "^1.1.2"
+    "@rock.chen/icms-http-client": "^1.1.3"
   }
 }
