@@ -24,13 +24,10 @@ export class ICMSClient {
     // ========== 用户认证 ==========
 
     async login({ username, password }: Readonly<{ username: string, password: string }>): Promise<Member | undefined> {
-        await iPost('login', {
+        // 浏览器端直接返回接口数据（token/user cookie 为 HttpOnly，前端无法读取）
+        return await iPost<Member>('login', {
             data: { username, password }
         })
-        if (this.cookies) {
-            return getLoginUser(this.cookies)
-        }
-        return undefined
     }
 
     async logout(): Promise<void> {
@@ -48,9 +45,13 @@ export class ICMSClient {
      * @returns 注册成功且已登录时返回 Member，否则 undefined
      */
     async register({ username, password, validateCode, nickname }: Readonly<{ username: string, password: string, validateCode: string, nickname?: string }>): Promise<Member | undefined> {
-        await iPost('register', {
+        const result = await iPost<Member>('register', {
             data: { username, password, validateCode, nickname }
         })
+        // register 接口通常只返回 "success"，若返回对象（Member）直接使用，否则交给页面 fallback 登录
+        if (result && typeof result === 'object') {
+            return result
+        }
         if (this.cookies) {
             return getLoginUser(this.cookies)
         }
