@@ -355,3 +355,90 @@ export interface MemberSrv extends WebsiteOwner {
 export interface Member extends User {
     [key: string]: any
 }
+
+/**
+ * 会员级别
+ */
+export type UserLevel = 'guest' | 'member';
+
+/**
+ * C端会员资料(对应后端 MemberInfoVO)
+ */
+export interface MemberInfo {
+    id: string,
+    name: string,
+    nickname?: string,
+    /** 头像地址(对应后端 headImg) */
+    avatar?: string,
+    email?: string,
+    phone?: string,
+    username: string,
+    birthday?: string,
+    /** 性别 0未知 1男 2女 */
+    gender: number,
+    level: UserLevel
+}
+
+/**
+ * C端会员收货地址(对应后端 MemberAddress)
+ */
+export interface MemberAddress {
+    id: number,
+    poiId?: string,
+    /** 收货人/地址名称 */
+    name: string,
+    aliasName?: string,
+    countryCode?: string,
+    provCode?: string,
+    cityCode?: string,
+    areaCode?: string,
+    country?: string,
+    province?: string,
+    city?: string,
+    area?: string,
+    address?: string,
+    postCode?: string,
+    latitude?: number,
+    longitude?: number,
+    zoom?: number,
+    /** 是否默认地址 */
+    defaultAddr?: boolean
+}
+
+/**
+ * 支付状态
+ */
+export type PayStatus = 'wait' | 'success' | 'fail' | 'cancel';
+
+/**
+ * 支付方式
+ */
+export type PayType = 'WECHAT' | 'ALIPAY' | 'UNLINE';
+
+/**
+ * C端会员订单(对应后端 MallOrder/BaseOrder 常用字段)
+ */
+export interface OrderVO {
+    id: string,
+    /** 订单编号 */
+    orderNo: string,
+    /** 下单用户名 */
+    userName?: string,
+    /** 订单内容简述 */
+    description?: string,
+    /** 订单金额(元) */
+    amount?: number,
+    /** 实际收到金额 */
+    actualAmount?: number,
+    /** 支付状态 */
+    payStatus?: PayStatus,
+    /** 支付方式 */
+    payType?: PayType | null,
+    /** 下单时间 */
+    createTime?: string,
+    /** 支付成功时间 */
+    payTime?: string,
+    /** 结算货币 */
+    settlementCurrency?: string,
+    [k: string]: any
+}

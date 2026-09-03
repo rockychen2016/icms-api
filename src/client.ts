@@ -1,4 +1,4 @@
-import type { Member, FriendLink, LinkGroup, I18NWebsite, Webchannel, WebsiteInfo } from "./types/site"
+import type { Member, FriendLink, LinkGroup, I18NWebsite, Webchannel, WebsiteInfo, MemberInfo, MemberAddress, OrderVO } from "./types/site"
 import type { ProductContent } from "./types/cms-product"
 import type { PageInfo, PageParams } from "./types/cms-base"
 import type { NewsContent } from "./types/cms-news"
@@ -268,6 +268,66 @@ export class ICMSClient {
     /** 分页搜索商品 */
     async searchGoods(params: Readonly<{ cateCode?: string; keyword?: string } & PageParams>): Promise<PageInfo<GoodsItem> | undefined> {
         return iGet<PageInfo<GoodsItem>>("searchGoods", { data: { ...params, pageNo: String(params.pageNo), pageSize: String(params.pageSize) } })
+    }
+
+    // ========== 会员中心(登录后) ==========
+
+    /**
+     * 我的资料(当前登录会员信息)
+     */
+    async myInfo(): Promise<MemberInfo | undefined> {
+        return iGet<MemberInfo>("myInfo")
+    }
+
+    /**
+     * 修改我的资料(昵称/头像/姓名/性别/生日)
+     * @param data headImg 支持 base64(data:image/..)自动上传为静态文件
+     */
+    async updateBaseInfo(data: Readonly<{ name?: string; nickname?: string; headImg?: string; sex?: number; birthday?: string }>): Promise<MemberInfo | undefined> {
+        return iPost<MemberInfo>("updateBaseInfo", { data })
+    }
+
+    /**
+     * 修改密码
+     */
+    async changePwd(oldPwd: string, newPwd: string): Promise<boolean> {
+        return iPostSuccess("changePwd", { data: { oldPwd, newPwd } })
+    }
+
+    /**
+     * 我的收货地址列表(默认地址在前)
+     */
+    async addressList(): Promise<Array<MemberAddress>> {
+        return (await iGet<Array<MemberAddress>>("addressList")) ?? []
+    }
+
+    /**
+     * 新增/更新收货地址(id为空新增,否则更新; defaultAddr=true自动设为默认)
+     */
+    async addressSave(data: Readonly<Partial<MemberAddress>>): Promise<MemberAddress | undefined> {
+        return iPost<MemberAddress>("addressSave", { data })
+    }
+
+    /**
+     * 删除收货地址
+     */
+    async addressDelete(id: number): Promise<boolean> {
+        return iPostSuccess("addressDelete", { data: { id } })
+    }
+
+    /**
+     * 设为默认收货地址
+     */
+    async addressSetDefault(id: number): Promise<boolean> {
+        return iPostSuccess("addressSetDefault", { data: { id } })
+    }
+
+    /**
+     * 我的商城订单(分页,可按支付状态过滤)
+     * @param params payStatus: wait/success/fail/cancel
+     */
+    async orderList(params: Readonly<{ payStatus?: string } & PageParams>): Promise<PageInfo<OrderVO> | undefined> {
+        return iGet<PageInfo<OrderVO>>("orderList", { data: { ...params, pageNo: String(params.pageNo), pageSize: String(params.pageSize) } })
     }
 }
 

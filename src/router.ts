@@ -50,6 +50,15 @@ const APIMAP: Record<string, string> = {
     submitLink: "guest/site/addLink",
     // 商城
     getSpecDescription: "guest/site/shop/getSpecDescription",
+    // 会员中心(登录后)
+    myInfo: "api/account/myInfo",
+    updateBaseInfo: "api/account/updateBaseInfo",
+    changePwd: "api/account/changePwd",
+    addressList: "api/account/addressList",
+    addressSave: "api/account/addressSave",
+    addressDelete: "api/account/addressDelete",
+    addressSetDefault: "api/account/addressSetDefault",
+    orderList: "api/account/orderList",
 }
 
 export const icmsRouter = async <T, R>({
