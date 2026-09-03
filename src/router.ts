@@ -59,6 +59,7 @@ const APIMAP: Record<string, string> = {
     addressDelete: "api/account/addressDelete",
     addressSetDefault: "api/account/addressSetDefault",
     orderList: "api/account/orderList",
+    submitOrder: "api/account/submitOrder",
 }
 
 export const icmsRouter = async <T, R>({

@@ -424,6 +424,16 @@ export type LogisticsState = 'confirming' | 'shipping' | 'delivering' | 'receive
 export type OrderState = 'all' | 'unpaid' | 'paid' | 'finished' | 'refunded';
 
 /**
+ * 提交订单的商品项
+ */
+export interface SubmitOrderItem {
+    /** 上架商品ID */
+    goodsListedId: string;
+    /** 购买数量 */
+    quantity: number;
+}
+
+/**
  * 支付方式
  */
 export type PayType = 'WECHAT' | 'ALIPAY' | 'UNLINE';

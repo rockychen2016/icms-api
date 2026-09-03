@@ -1,4 +1,4 @@
-import type { Member, FriendLink, LinkGroup, I18NWebsite, Webchannel, WebsiteInfo, MemberInfo, MemberAddress, OrderVO, OrderState } from "./types/site"
+import type { Member, FriendLink, LinkGroup, I18NWebsite, Webchannel, WebsiteInfo, MemberInfo, MemberAddress, OrderVO, OrderState, SubmitOrderItem } from "./types/site"
 import type { ProductContent } from "./types/cms-product"
 import type { PageInfo, PageParams } from "./types/cms-base"
 import type { NewsContent } from "./types/cms-news"
@@ -328,6 +328,15 @@ export class ICMSClient {
      */
     async orderList(params: Readonly<{ state?: OrderState } & PageParams>): Promise<PageInfo<OrderVO> | undefined> {
         return iGet<PageInfo<OrderVO>>("orderList", { data: { ...params, pageNo: String(params.pageNo), pageSize: String(params.pageSize) } })
+    }
+
+    /**
+     * 提交订单(购物车结算,生成待付款订单)
+     * @param items 商品列表(goodsListedId+quantity)
+     * @param remark 订单备注(可选)
+     */
+    async submitOrder(items: Array<SubmitOrderItem>, remark?: string): Promise<OrderVO | undefined> {
+        return iPost<OrderVO>("submitOrder", { data: { itemsJson: JSON.stringify(items), remark: remark ?? "" } })
     }
 }
 
