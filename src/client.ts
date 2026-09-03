@@ -1,4 +1,4 @@
-import type { Member, FriendLink, LinkGroup, I18NWebsite, Webchannel, WebsiteInfo, MemberInfo, MemberAddress, OrderVO } from "./types/site"
+import type { Member, FriendLink, LinkGroup, I18NWebsite, Webchannel, WebsiteInfo, MemberInfo, MemberAddress, OrderVO, OrderState } from "./types/site"
 import type { ProductContent } from "./types/cms-product"
 import type { PageInfo, PageParams } from "./types/cms-base"
 import type { NewsContent } from "./types/cms-news"
@@ -323,10 +323,10 @@ export class ICMSClient {
     }
 
     /**
-     * 我的商城订单(分页,可按支付状态过滤)
-     * @param params payStatus: wait/success/fail/cancel
+     * 我的商城订单(分页,按订单状态分类过滤)
+     * @param params state: all=全部 unpaid=待付款 paid=已付款 finished=已完成(已收货) refunded=已退款
      */
-    async orderList(params: Readonly<{ payStatus?: string } & PageParams>): Promise<PageInfo<OrderVO> | undefined> {
+    async orderList(params: Readonly<{ state?: OrderState } & PageParams>): Promise<PageInfo<OrderVO> | undefined> {
         return iGet<PageInfo<OrderVO>>("orderList", { data: { ...params, pageNo: String(params.pageNo), pageSize: String(params.pageSize) } })
     }
 }

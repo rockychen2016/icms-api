@@ -398,6 +398,8 @@ export interface MemberAddress {
     area?: string,
     address?: string,
     postCode?: string,
+    /** 联系电话(手机号,支持大陆/香港/国际格式) */
+    mobile?: string,
     latitude?: number,
     longitude?: number,
     zoom?: number,
@@ -409,6 +411,17 @@ export interface MemberAddress {
  * 支付状态
  */
 export type PayStatus = 'wait' | 'success' | 'fail' | 'cancel';
+
+/**
+ * 订单物流状态(由商户后台标记,暂不对接物流接口)
+ */
+export type LogisticsState = 'confirming' | 'shipping' | 'delivering' | 'received';
+
+/**
+ * C端订单分类查询状态
+ * all=全部 unpaid=待付款 paid=已付款 finished=已完成(已收货) refunded=已退款
+ */
+export type OrderState = 'all' | 'unpaid' | 'paid' | 'finished' | 'refunded';
 
 /**
  * 支付方式
@@ -434,6 +447,10 @@ export interface OrderVO {
     payStatus?: PayStatus,
     /** 支付方式 */
     payType?: PayType | null,
+    /** 物流状态(空=未开始履约;由商户后台标记) */
+    logisticsState?: LogisticsState | null,
+    /** 退款状态(空=未发生退款; All=全退 Partial=部分退款) */
+    refundState?: 'All' | 'Partial' | null,
     /** 下单时间 */
     createTime?: string,
     /** 支付成功时间 */
