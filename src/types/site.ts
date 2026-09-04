@@ -434,6 +434,21 @@ export interface SubmitOrderItem {
 }
 
 /**
+ * 订单支付状态(支付完成后前端轮询)
+ */
+export interface OrderPayStatusVO {
+    orderNo: string,
+    /** 支付状态 */
+    payStatus?: PayStatus,
+    /** 支付方式 */
+    payType?: PayType | null,
+    /** 订单金额(元) */
+    amount?: number,
+    /** 付款成功时间 */
+    payTime?: string,
+}
+
+/**
  * 支付方式
  */
 export type PayType = 'WECHAT' | 'ALIPAY' | 'UNLINE';

@@ -1,4 +1,4 @@
-import type { Member, FriendLink, LinkGroup, I18NWebsite, Webchannel, WebsiteInfo, MemberInfo, MemberAddress, OrderVO, OrderState, SubmitOrderItem } from "./types/site"
+import type { Member, FriendLink, LinkGroup, I18NWebsite, Webchannel, WebsiteInfo, MemberInfo, MemberAddress, OrderVO, OrderState, OrderPayStatusVO, SubmitOrderItem } from "./types/site"
 import type { ProductContent } from "./types/cms-product"
 import type { PageInfo, PageParams } from "./types/cms-base"
 import type { NewsContent } from "./types/cms-news"
@@ -337,6 +337,24 @@ export class ICMSClient {
      */
     async submitOrder(items: Array<SubmitOrderItem>, remark?: string): Promise<OrderVO | undefined> {
         return iPost<OrderVO>("submitOrder", { data: { itemsJson: JSON.stringify(items), remark: remark ?? "" } })
+    }
+
+    /**
+     * 发起支付宝PC网页支付
+     * 返回支付宝form表单HTML,前端注入页面并自动提交,浏览器跳转支付宝收银台
+     * @param orderNo 订单号
+     * @param appId 支付宝应用ID(网站环境变量)
+     * @param returnUrl 支付完成后跳转地址(https完整地址)
+     */
+    async aliPcWebPay({ orderNo, appId, returnUrl }: Readonly<{ orderNo: string, appId: string, returnUrl?: string }>): Promise<string | undefined> {
+        return await iPost<string>("aliPcWeb", { data: { orderNo, appId, returnUrl: returnUrl ?? "" } })
+    }
+
+    /**
+     * 查询订单支付状态(支付完成后轮询;后端在待支付状态下主动向支付宝查单,回调丢失自愈)
+     */
+    async orderPayStatus(orderNo: string): Promise<OrderPayStatusVO | undefined> {
+        return await iGet<OrderPayStatusVO>("orderPayStatus", { data: { orderNo } })
     }
 }
 

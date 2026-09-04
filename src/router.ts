@@ -60,6 +60,9 @@ const APIMAP: Record<string, string> = {
     addressSetDefault: "api/account/addressSetDefault",
     orderList: "api/account/orderList",
     submitOrder: "api/account/submitOrder",
+    orderPayStatus: "api/account/orderPayStatus",
+    // 支付
+    aliPcWeb: "api/pay/aliPcWeb",
 }
 
 export const icmsRouter = async <T, R>({
